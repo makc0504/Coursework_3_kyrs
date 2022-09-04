@@ -1,0 +1,1772 @@
+// Код решения ЗЛП симплексным методом
+
+Private Sub basis(A1(), A2(), A3(), A4(), A5(), A6(), B1, B2, B3, B_1, B_2, B_3)
+        basis1 = Array(1, 0, 0)
+        basis2 = Array(0, 1, 0)
+        basis3 = Array(0, 0, 1)
+        
+        If A1(0) = basis1(0) And A1(1) = basis1(1) And A1(2) = basis1(2) Then
+            B1 = "A" & ChrW(&H2081)
+            B_1 = "A1"
+        ElseIf A1(0) = basis2(0) And A1(1) = basis2(1) And A1(2) = basis2(2) Then
+            B2 = "A" & ChrW(&H2081)
+            B_2 = "A1"
+        ElseIf A1(0) = basis3(0) And A1(1) = basis3(1) And A1(2) = basis3(2) Then
+            B3 = "A" & ChrW(&H2081)
+            B_3 = "A1"
+        End If
+        
+        If A2(0) = basis1(0) And A2(1) = basis1(1) And A2(2) = basis1(2) Then
+            B1 = "A" & ChrW(&H2082)
+            B_1 = "A2"
+        ElseIf A2(0) = basis2(0) And A2(1) = basis2(1) And A2(2) = basis2(2) Then
+            B2 = "A" & ChrW(&H2082)
+            B_2 = "A2"
+        ElseIf A2(0) = basis3(0) And A2(1) = basis3(1) And A2(2) = basis3(2) Then
+            B3 = "A" & ChrW(&H2082)
+            B_3 = "A2"
+        End If
+        
+        If A3(0) = basis1(0) And A3(1) = basis1(1) And A3(2) = basis1(2) Then
+            B1 = "A" & ChrW(&H2083)
+            B_1 = "A3"
+        ElseIf A3(0) = basis2(0) And A3(1) = basis2(1) And A3(2) = basis2(2) Then
+            B2 = "A" & ChrW(&H2083)
+            B_2 = "A3"
+        ElseIf A3(0) = basis3(0) And A3(1) = basis3(1) And A3(2) = basis3(2) Then
+            B3 = "A" & ChrW(&H2083)
+            B_3 = "A3"
+        End If
+        
+        If A4(0) = basis1(0) And A4(1) = basis1(1) And A4(2) = basis1(2) Then
+            B1 = "A" & ChrW(&H2084)
+            B_1 = "A4"
+        ElseIf A4(0) = basis2(0) And A4(1) = basis2(1) And A4(2) = basis2(2) Then
+            B2 = "A" & ChrW(&H2084)
+            B_2 = "A4"
+        ElseIf A4(0) = basis3(0) And A4(1) = basis3(1) And A4(2) = basis3(2) Then
+            B3 = "A" & ChrW(&H2084)
+            B_3 = "A4"
+        End If
+        
+        If A5(0) = basis1(0) And A5(1) = basis1(1) And A5(2) = basis1(2) Then
+            B1 = "A" & ChrW(&H2085)
+            B_1 = "A5"
+        ElseIf A5(0) = basis2(0) And A5(1) = basis2(1) And A5(2) = basis2(2) Then
+            B2 = "A" & ChrW(&H2085)
+            B_2 = "A5"
+        ElseIf A5(0) = basis3(0) And A5(1) = basis3(1) And A5(2) = basis3(2) Then
+            B3 = "A" & ChrW(&H2085)
+            B_3 = "A5"
+        End If
+        
+        If A6(0) = basis1(0) And A6(1) = basis1(1) And A6(2) = basis1(2) Then
+            B1 = "A" & ChrW(&H2086)
+            B_1 = "A6"
+        ElseIf A6(0) = basis2(0) And A6(1) = basis2(1) And A6(2) = basis2(2) Then
+            B2 = "A" & ChrW(&H2086)
+            B_2 = "A6"
+        ElseIf A6(0) = basis3(0) And A6(1) = basis3(1) And A6(2) = basis3(2) Then
+            B3 = "A" & ChrW(&H2086)
+            B_3 = "A6"
+        End If
+End Sub
+
+Private Sub tetta(A0(), A1(), A2(), A3(), A4(), A5(), A6(), Q1(), Q2(), Q3(), Q4(), Q5(), Q6(), B_1, B_2, B_3, Row)
+    
+    Q1 = Array(0, 0, 0)
+    Q2 = Array(0, 0, 0)
+    Q3 = Array(0, 0, 0)
+    Q4 = Array(0, 0, 0)
+    Q5 = Array(0, 0, 0)
+    Q6 = Array(0, 0, 0)
+    
+    For i = 0 To 2
+            If A1(i) = 0 Or A0(i) = 0 Or A0(i) < 0 Or A1(i) < 0 Or _
+               B_1 = "A1" Or B_2 = "A1" Or B_3 = "A1" Then
+                Q1(i) = ChrW(&H2500)
+            Else: Q1(i) = A0(i) / A1(i)
+            End If
+            Cells(i + Row, 11) = Q1(i)
+            
+            If A2(i) = 0 Or A0(i) = 0 Or A0(i) < 0 Or A2(i) < 0 Or _
+               B_1 = "A2" Or B_2 = "A2" Or B_3 = "A2" Then
+                Q2(i) = ChrW(&H2500)
+            Else: Q2(i) = A0(i) / A2(i)
+            End If
+            Cells(i + Row, 12) = Q2(i)
+            
+            If A3(i) = 0 Or A0(i) = 0 Or A0(i) < 0 Or A3(i) < 0 Or _
+            B_1 = "A3" Or B_2 = "A3" Or B_3 = "A3" Then
+                Q3(i) = ChrW(&H2500)
+            Else: Q3(i) = A0(i) / A3(i)
+            End If
+            Cells(i + Row, 13) = Q3(i)
+            
+            If A4(i) = 0 Or A0(0) = 0 Or A0(i) < 0 Or A4(i) < 0 Or _
+            B_1 = "A4" Or B_2 = "A4" Or B_3 = "A4" Then
+                Q4(i) = ChrW(&H2500)
+            Else: Q4(i) = A0(i) / A4(i)
+            End If
+            Cells(i + Row, 14) = Q4(i)
+            
+            If A5(i) = 0 Or A0(i) = 0 Or A0(i) < 0 Or A5(i) < 0 Or _
+            B_1 = "A5" Or B_2 = "A5" Or B_3 = "A5" Then
+                Q5(i) = ChrW(&H2500)
+            Else: Q5(i) = A0(i) / A5(i)
+            End If
+            Cells(i + Row, 15) = Q5(i)
+            
+            If A6(i) = 0 Or A0(i) = 0 Or A0(i) < 0 Or A6(i) < 0 Or _
+            B_1 = "A6" Or B_2 = "A6" Or B_3 = "A6" Then
+                Q6(i) = ChrW(&H2500)
+            Else: Q6(i) = A0(i) / A6(i)
+            End If
+            Cells(i + Row, 16) = Q6(i)
+        Next i
+End Sub
+
+Private Sub search_min_tetta(Q1(), Q2(), Q3(), Q4(), Q5(), Q6(), min_Q1, min_Q2, min_Q3, min_Q4, min_Q5, min_Q6, Row)
+
+            If Q1(0) <> ChrW(&H2500) _
+            Or Q1(1) <> ChrW(&H2500) _
+            Or Q1(2) <> ChrW(&H2500) Then
+                min_index = 0
+                min_Q1 = 1000
+                For i = 0 To 2
+                    If Q1(i) <> ChrW(&H2500) Then
+                        If Q1(i) < min_Q1 Then
+                            min_Q1 = Q1(i)
+                            min_index = i
+                        End If
+                    End If
+                Next
+            Cells(min_index + Row, 11).Interior.Color = RGB(146, 251, 151)
+            End If
+        
+            If Q2(0) <> ChrW(&H2500) _
+            Or Q2(1) <> ChrW(&H2500) _
+            Or Q2(2) <> ChrW(&H2500) Then
+                min_index = 0
+                min_Q2 = 1000
+                For i = 0 To 2
+                    If Q2(i) <> ChrW(&H2500) Then
+                        If Q2(i) < min_Q2 Then
+                            min_Q2 = Q2(i)
+                            min_index = i
+                        End If
+                    End If
+                Next
+            Cells(min_index + Row, 12).Interior.Color = RGB(146, 251, 151)
+            End If
+        
+            If Q3(0) <> ChrW(&H2500) _
+            Or Q3(1) <> ChrW(&H2500) _
+            Or Q3(2) <> ChrW(&H2500) Then
+                min_index = 0
+                min_Q3 = 1000
+                For i = 0 To 2
+                    If Q3(i) <> ChrW(&H2500) Then
+                        If Q3(i) < min_Q3 Then
+                            min_Q3 = Q3(i)
+                            min_index = i
+                        End If
+                    End If
+                Next
+            Cells(min_index + Row, 13).Interior.Color = RGB(146, 251, 151)
+            End If
+        
+            If Q4(0) <> ChrW(&H2500) _
+            Or Q4(1) <> ChrW(&H2500) _
+            Or Q4(2) <> ChrW(&H2500) Then
+                min_index = 0
+                min_Q4 = 1000
+                For i = 0 To 2
+                    If Q4(i) <> ChrW(&H2500) Then
+                        If Q4(i) < min_Q4 Then
+                            min_Q4 = Q4(i)
+                            min_index = i
+                        End If
+                    End If
+                Next
+            Cells(min_index + Row, 14).Interior.Color = RGB(146, 251, 151)
+            End If
+        
+            If Q5(0) <> ChrW(&H2500) _
+            Or Q5(1) <> ChrW(&H2500) _
+            Or Q5(2) <> ChrW(&H2500) Then
+                min_index = 0
+                min_Q5 = 1000
+                For i = 0 To 2
+                    If Q5(i) <> ChrW(&H2500) Then
+                        If Q5(i) < min_Q5 Then
+                            min_Q5 = Q5(i)
+                            min_index = i
+                        End If
+                    End If
+                Next
+            Cells(min_index + Row, 15).Interior.Color = RGB(146, 251, 151)
+            End If
+        
+            If Q6(0) <> ChrW(&H2500) _
+            Or Q6(1) <> ChrW(&H2500) _
+            Or Q6(2) <> ChrW(&H2500) Then
+                min_index = 0
+                min_Q6 = 1000
+                For i = 0 To 2
+                    If Q6(i) <> ChrW(&H2500) Then
+                        If Q6(i) < min_Q6 Then
+                            min_Q6 = Q6(i)
+                            min_index = i
+                        End If
+                    End If
+                Next
+            Cells(min_index + Row, 16).Interior.Color = RGB(146, 251, 151)
+            End If
+            
+End Sub
+
+Private Sub C_b(Cb(), B_1, B_2, B_3, Ck(), Row)
+        
+        symbols_A = Array("A1", "A2", "A3", "A4", "A5", "A6")
+        
+        Cb = Array(0, 0, 0)
+        For i = 0 To 5
+            If B_1 = symbols_A(i) Then
+                Cb(0) = Ck(i)
+            End If
+        Next i
+            
+        For i = 0 To 5
+            If B_2 = symbols_A(i) Then
+                Cb(1) = Ck(i)
+            End If
+        Next i
+            
+        For i = 0 To 5
+            If B_3 = symbols_A(i) Then
+                Cb(2) = Ck(i)
+            End If
+        Next i
+            
+        For i = 0 To 2
+            Cells(i + Row, 3) = Cb(i)
+        Next i
+End Sub
+
+Private Sub search_delta_k(A0(), A1(), A2(), A3(), A4(), A5(), A6(), Cb(), Ck(), delta_k, _
+range_dk, range1, range2, range3, range4, range5, range6, range7)
+        
+        delta_k = 0
+        
+        Range(range_dk) = ChrW(&H2206) & "k"
+        
+        For i = 0 To 2
+            temp = Cb(i) * A0(i)
+            delta_k = delta_k + temp
+        Next i
+        Range(range1).Value = delta_k
+        delta_k = 0
+        
+        For i = 0 To 2
+            temp = Cb(i) * A1(i)
+            delta_k = delta_k + temp
+        Next i
+        delta_k = delta_k - Ck(0)
+        Range(range2).Value = delta_k
+        delta_k = 0
+        
+        For i = 0 To 2
+            temp = Cb(i) * A2(i)
+            delta_k = delta_k + temp
+        Next i
+        delta_k = delta_k - Ck(1)
+        Range(range3).Value = delta_k
+        delta_k = 0
+        
+        For i = 0 To 2
+            temp = Cb(i) * A3(i)
+            delta_k = delta_k + temp
+        Next i
+        delta_k = delta_k - Ck(2)
+        Range(range4).Value = delta_k
+        delta_k = 0
+        
+        For i = 0 To 2
+            temp = Cb(i) * A4(i)
+            delta_k = delta_k + temp
+        Next i
+        delta_k = delta_k - Ck(3)
+        Range(range5).Value = delta_k
+        delta_k = 0
+        
+        For i = 0 To 2
+            temp = Cb(i) * A5(i)
+            delta_k = delta_k + temp
+        Next i
+        delta_k = delta_k - Ck(4)
+        Range(range6).Value = delta_k
+        delta_k = 0
+        
+        For i = 0 To 2
+            temp = Cb(i) * A6(i)
+            delta_k = delta_k + temp
+        Next i
+        delta_k = delta_k - Ck(5)
+        Range(range7).Value = delta_k
+        delta_k = 0
+End Sub
+
+Private Sub optimal_solution_max(delta_k, X(), A0(), B_1, B_2, B_3, range1_1, range1_2, range2_1, _
+range2_2, range3_1, range3_2)
+
+    Range(range1_1, range1_2).Merge
+    Range(range1_1, range1_2).Font.Size = 9
+
+    If delta_k(0) >= 0 And delta_k(1) >= 0 And delta_k(2) >= 0 _
+            And delta_k(3) >= 0 And delta_k(4) >= 0 And delta_k(5) >= 0 _
+            And delta_k(6) >= 0 Then
+                If B_1 = "A1" Then
+                    X(0) = A0(0)
+                Else: X(0) = 0
+                End If
+                
+                If B_1 = "A2" Then
+                    X(1) = A0(0)
+                Else: X(1) = 0
+                End If
+                
+                If B_1 = "A3" Then
+                    X(2) = A0(0)
+                Else: X(2) = 0
+                End If
+                
+                If B_1 = "A4" Then
+                    X(3) = A0(0)
+                Else: X(3) = 0
+                End If
+                
+                If B_1 = "A5" Then
+                    X(4) = A0(0)
+                Else: X(4) = 0
+                End If
+                
+                If B_1 = "A6" Then
+                    X(5) = A0(0)
+                Else: X(6) = 0
+                End If
+                
+                If B_2 = "A1" Then
+                    X(0) = A0(1)
+                Else: X(0) = 0
+                End If
+                
+                If B_2 = "A2" Then
+                    X(1) = A0(1)
+                Else: X(1) = 0
+                End If
+                
+                If B_2 = "A3" Then
+                    X(2) = A0(1)
+                Else: X(2) = 0
+                End If
+                
+                If B_2 = "A4" Then
+                    X(3) = A0(1)
+                Else: X(3) = 0
+                End If
+                
+                If B_2 = "A5" Then
+                    X(4) = A0(1)
+                Else: X(4) = 0
+                End If
+                
+                If B_2 = "A6" Then
+                    X(5) = A0(1)
+                Else: X(5) = 0
+                End If
+                
+                If B_3 = "A1" Then
+                    X(0) = A0(0)
+                Else: X(0) = 0
+                End If
+                
+                If B_3 = "A2" Then
+                    X(1) = A0(0)
+                Else: X(1) = 0
+                End If
+                
+                If B_3 = "A3" Then
+                    X(2) = A0(0)
+                Else: X(2) = 0
+                End If
+                
+                If B_3 = "A4" Then
+                    X(3) = A0(0)
+                Else: X(3) = 0
+                End If
+                
+                If B_3 = "A5" Then
+                    X(4) = A0(0)
+                Else: X(4) = 0
+                End If
+                
+                If B_3 = "A6" Then
+                    X(5) = A0(0)
+                Else: X(5) = 0
+                End If
+            
+                Range(range1_1, range1_2) = ChrW(&H2206) & "k " & ChrW(&H2265) & " 0 => решение оптимальное"
+                Range(range2_1, range2_2).Merge
+                Range(range2_1, range2_2).Value = "X* = (" & X(0) & "; " & X(1) & "; " & _
+                X(2) & "; " & X(3) & "; " & X(4) & "; " & X(5) & "; " & ")"
+                Range(range3_1, range3_2).Merge
+                Range(range3_1, range3_2) = "Ответ: " & "X* = (" & X(0) & "; " & X(1) & "; " & _
+                X(2) & "; " & X(3) & "; " & X(4) & "; " & X(5) & "; " & ")"
+            End If
+
+End Sub
+
+Private Sub optimal_solution_min(delta_k, X(), A0(), B_1, B_2, B_3, range1_1, range1_2, range2_1, _
+range2_2, range3_1, range3_2)
+    
+    Range(range1_1, range1_2).Merge
+    Range(range1_1, range1_2).Font.Size = 9
+    
+    If delta_k(0) <= 0 And delta_k(1) <= 0 And delta_k(2) <= 0 _
+    And delta_k(3) <= 0 And delta_k(4) <= 0 And delta_k(5) <= 0 _
+    And delta_k(6) <= 0 Then
+        If B_1 = "A1" Then
+            X(0) = A0(0)
+        Else: X(0) = 0
+        End If
+                
+        If B_1 = "A2" Then
+            X(1) = A0(0)
+        Else: X(1) = 0
+        End If
+                
+        If B_1 = "A3" Then
+            X(2) = A0(0)
+        Else: X(2) = 0
+        End If
+                
+        If B_1 = "A4" Then
+            X(3) = A0(0)
+        Else: X(3) = 0
+        End If
+                
+        If B_1 = "A5" Then
+            X(4) = A0(0)
+        Else: X(4) = 0
+        End If
+                
+        If B_1 = "A6" Then
+            X(5) = A0(0)
+        Else: X(6) = 0
+        End If
+                
+        If B_2 = "A1" Then
+            X(0) = A0(1)
+        Else: X(0) = 0
+        End If
+                
+        If B_2 = "A2" Then
+            X(1) = A0(1)
+        Else: X(1) = 0
+        End If
+                
+        If B_2 = "A3" Then
+            X(2) = A0(1)
+        Else: X(2) = 0
+        End If
+                
+        If B_2 = "A4" Then
+            X(3) = A0(1)
+        Else: X(3) = 0
+        End If
+                
+        If B_2 = "A5" Then
+            X(4) = A0(1)
+        Else: X(4) = 0
+        End If
+                
+        If B_2 = "A6" Then
+            X(5) = A0(1)
+        Else: X(5) = 0
+        End If
+               
+        If B_3 = "A1" Then
+            X(0) = A0(0)
+        Else: X(0) = 0
+        End If
+                
+        If B_3 = "A2" Then
+            X(1) = A0(0)
+        Else: X(1) = 0
+        End If
+                
+        If B_3 = "A3" Then
+            X(2) = A0(0)
+        Else: X(2) = 0
+        End If
+                
+        If B_3 = "A4" Then
+            X(3) = A0(0)
+        Else: X(3) = 0
+        End If
+                
+        If B_3 = "A5" Then
+            X(4) = A0(0)
+        Else: X(4) = 0
+        End If
+                
+        If B_3 = "A6" Then
+            X(5) = A0(0)
+        Else: X(5) = 0
+        End If
+            
+        Range(range1_1, range1_2) = ChrW(&H2206) & "k " & ChrW(&H2265) & " 0 => решение оптимальное"
+        Range(range2_1, range2_2).Merge
+        Range(range2_1, range2_2).Value = "X* = (" & X(0) & "; " & X(1) & "; " & _
+        X(2) & "; " & X(3) & "; " & X(4) & "; " & X(5) & "; " & ")"
+        Range(range3_1, range3_2).Merge
+        Range(range3_1, range3_2) = "Ответ: " & "X* = (" & X(0) & "; " & X(1) & "; " & _
+        X(2) & "; " & X(3) & "; " & X(4) & "; " & X(5) & "; " & ")"
+    End If
+    
+End Sub
+
+Private Sub No_solutions_max(A0(), A1(), A2(), A3(), A4(), A5(), A6(), delta_k, _
+                             range1_1, range1_2, range2_1, range2_2)
+
+    If delta_k(0) <= 0 And A0(0) < 0 And A0(1) < 0 And A0(2) < 0 Then
+                Range(range1_1, range1_2) = ChrW(&H2206) & "k " & ChrW(&H2264) & " 0 и A0 < 0 => решенй нет"
+                Range(range2_1, range2_2).Merge
+                Range(range2_1, range2_2) = "Ответ: решений нет"
+                Range(range2_1, range2_2).Interior.Color = RGB(255, 255, 71)
+                
+            ElseIf delta_k(1) <= 0 And A1(0) < 0 And A1(1) < 0 And A1(2) < 0 Then
+                Range(range1_1, range1_2) = ChrW(&H2206) & "k " & ChrW(&H2264) & " 0 и A1 < 0 => решенй нет"
+                Range(range2_1, range2_2).Merge
+                Range(range2_1, range2_2) = "Ответ: решений нет"
+                Range(range2_1, range2_2).Interior.Color = RGB(255, 255, 71)
+                   
+            ElseIf delta_k(2) <= 0 And A2(0) < 0 And A2(1) < 0 And A2(2) < 0 Then
+                Range(range1_1, range1_2) = ChrW(&H2206) & "k " & ChrW(&H2264) & " 0 и A2 < 0 => решенй нет"
+                Range(range2_1, range2_2).Merge
+                Range(range2_1, range2_2) = "Ответ: решений нет"
+                Range(range2_1, range2_2).Interior.Color = RGB(255, 255, 71)
+                
+            ElseIf delta_k(3) <= 0 And A3(0) < 0 And A3(1) < 0 And A3(2) < 0 Then
+                Range(range1_1, range1_2) = ChrW(&H2206) & "k " & ChrW(&H2264) & " 0 и A3 < 0 => решенй нет"
+                Range(range2_1, range2_2).Merge
+                Range(range2_1, range2_2) = "Ответ: решений нет"
+                Range(range2_1, range2_2).Interior.Color = RGB(255, 255, 71)
+                
+            ElseIf delta_k(4) <= 0 And A4(0) < 0 And A4(1) < 0 And A4(2) < 0 Then
+                Range(range1_1, range1_2) = ChrW(&H2206) & "k " & ChrW(&H2264) & " 0 и A4 < 0 => решенй нет"
+                Range(range2_1, range2_2).Merge
+                Range(range2_1, range2_2) = "Ответ: решений нет"
+                Range(range2_1, range2_2).Interior.Color = RGB(255, 255, 71)
+                
+            ElseIf delta_k(5) <= 0 And A5(0) < 0 And A5(1) < 0 And A5(2) < 0 Then
+                Range(range1_1, range1_2) = ChrW(&H2206) & "k " & ChrW(&H2264) & " 0 и A5 < 0 => решенй нет"
+                Range(range2_1, range2_2).Merge
+                Range(range2_1, range2_2) = "Ответ: решений нет"
+                Range(range2_1, range2_2).Interior.Color = RGB(255, 255, 71)
+                
+            ElseIf delta_k(6) <= 0 And A6(0) < 0 And A6(1) < 0 And A6(2) < 0 Then
+                Range(range1_1, range1_2) = ChrW(&H2206) & "k " & ChrW(&H2264) & " 0 и A6 < 0 => решенй нет"
+                Range(range2_1, range2_2).Merge
+                Range(range2_1, range2_2) = "Ответ: решений нет"
+                Range(range2_1, range2_2).Interior.Color = RGB(255, 255, 71)
+            End If
+End Sub
+
+Private Sub No_solutions_min(A0(), A1(), A2(), A3(), A4(), A5(), A6(), delta_k, _
+                             range1_1, range1_2, range2_1, range2_2)
+                             
+    If delta_k(0) >= 0 And A0(0) < 0 And A0(1) < 0 And A0(2) < 0 Then
+        Range(range1_1, range1_2) = "Все " & ChrW(&H2206) & "k " & ChrW(&H2265) & " 0 и A0 < 0 => решенй нет"
+        Range(range2_1, range2_2).Merge
+        Range(range2_1, range2_2) = "Ответ: решений нет"
+        Range(range2_1, range2_2).Interior.Color = RGB(255, 255, 71)
+                
+    ElseIf delta_k(1) >= 0 And A1(0) < 0 And A1(1) < 0 And A1(2) < 0 Then
+        Range(range1_1, range1_2) = ChrW(&H2206) & "k " & ChrW(&H2265) & " 0 и A1 < 0 => решенй нет"
+        Range(range2_1, range2_2).Merge
+        Range(range2_1, range2_2) = "Ответ: решений нет"
+        Range(range2_1, range2_2).Interior.Color = RGB(255, 255, 71)
+                   
+    ElseIf delta_k(2) >= 0 And A2(0) < 0 And A2(1) < 0 And A2(2) < 0 Then
+        Range(range1_1, range1_2) = ChrW(&H2206) & "k " & ChrW(&H2265) & " 0 и A2 < 0 => решенй нет"
+        Range(range2_1, range2_2).Merge
+        Range(range2_1, range2_2) = "Ответ: решений нет"
+        Range(range2_1, range2_2).Interior.Color = RGB(255, 255, 71)
+                
+    ElseIf delta_k(3) >= 0 And A3(0) < 0 And A3(1) < 0 And A3(2) < 0 Then
+        Range(range1_1, range1_2) = ChrW(&H2206) & "k " & ChrW(&H2265) & " 0 и A3 < 0 => решенй нет"
+        Range(range2_1, range2_2).Merge
+        Range(range2_1, range2_2) = "Ответ: решений нет"
+        Range(range2_1, range2_2).Interior.Color = RGB(255, 255, 71)
+                
+    ElseIf delta_k(4) >= 0 And A4(0) < 0 And A4(1) < 0 And A4(2) < 0 Then
+        Range(range1_1, range1_2) = ChrW(&H2206) & "k " & ChrW(&H2265) & " 0 и A4 < 0 => решенй нет"
+        Range(range2_1, range2_2).Merge
+        Range(range2_1, range2_2) = "Ответ: решений нет"
+        Range(range2_1, range2_2).Interior.Color = RGB(255, 255, 71)
+                
+    ElseIf delta_k(5) >= 0 And A5(0) < 0 And A5(1) < 0 And A5(2) < 0 Then
+        Range(range1_1, range1_2) = ChrW(&H2206) & "k " & ChrW(&H2265) & " 0 и A5 < 0 => решенй нет"
+        Range(range2_1, range2_2).Merge
+        Range(range2_1, range2_2) = "Ответ: решений нет"
+        Range(range2_1, range2_2).Interior.Color = RGB(255, 255, 71)
+                
+    ElseIf delta_k(6) >= 0 And A6(0) < 0 And A6(1) < 0 And A6(2) < 0 Then
+        Range(range1_1, range1_2) = ChrW(&H2206) & "k " & ChrW(&H2265) & " 0 и A6 < 0 => решенй нет"
+        Range(range2_1, range2_2).Merge
+        Range(range2_1, range2_2) = "Ответ: решений нет"
+        Range(range2_1, range2_2).Interior.Color = RGB(255, 255, 71)
+    End If
+End Sub
+
+Sub Button2_Solution_task()
+       
+    'Каноническая ЗЛП'
+    Range("B9", "K9").Merge
+    Range("B9", "K9") = "Каноническая ЗЛП"
+    Range("B10").Value = "Z(x)"
+    Range("C10").Value = "="
+    Range("J10").Value = ChrW(&H2192)
+    Range("B10", "K10").Interior.Color = RGB(198, 239, 206)
+    Dim cell As Range
+    Range("K9") = Range("K3").Value
+    With Range("B9", "K14")
+        .Borders(xlEdgeBottom).LineStyle = True
+        .Borders(xlEdgeBottom).Weight = 3
+        .Borders(xlEdgeTop).LineStyle = True
+        .Borders(xlEdgeTop).Weight = 3
+        .Borders(xlEdgeRight).LineStyle = True
+        .Borders(xlEdgeRight).Weight = 3
+        .Borders(xlEdgeLeft).LineStyle = True
+        .Borders(xlEdgeLeft).Weight = 3
+        
+    End With
+    
+    funk = Range("D3", "F3").Value
+    Range("D10", "F10").Value = funk
+    Range("G10", "I10").Value = 0
+    Range("K10").Value = Range("K3").Value
+    
+    syst_ogr = Range("D5", "F7").Value
+    Range("D12", "F14").Value = syst_ogr
+    
+    Range("J12", "J14").Value = "="
+    
+    ogr = Range("K5", "K7").Value
+    Range("K12", "K14").Value = ogr
+    
+    Range("G13", "G14").Value = 0
+    Range("H12").Value = 0
+    Range("H14").Value = 0
+    Range("I12", "I13").Value = 0
+    
+    Range("G12").Interior.Color = RGB(201, 201, 201)
+    Range("H13").Interior.Color = RGB(201, 201, 201)
+    Range("I14").Interior.Color = RGB(201, 201, 201)
+    
+    If (Range("J5").Value = ChrW(&H2265)) Then
+        Range("G12").Value = -1
+    Else:
+        Range("G12").Value = 1
+    End If
+    
+    If (Range("J6").Value = ChrW(&H2265)) Then
+        Range("H13").Value = -1
+    Else:
+        Range("H13").Value = 1
+    End If
+        
+    If (Range("J7").Value = ChrW(&H2265)) Then
+        Range("I14").Value = -1
+    Else:
+        Range("I14").Value = 1
+    End If
+        'Решение симплекс методом
+        Dim A0() As Variant
+        Dim A1() As Variant
+        Dim A2() As Variant
+        Dim A3() As Variant
+        Dim A4() As Variant
+        Dim A5() As Variant
+        Dim A6() As Variant
+        Dim Q1() As Variant
+        Dim Q2() As Variant
+        Dim Q3() As Variant
+        Dim Q4() As Variant
+        Dim Q5() As Variant
+        Dim Q6() As Variant
+        Dim Cb() As Variant
+        Dim Ck() As Variant
+        Dim delta_k As Variant
+        Dim z As Variant
+        Dim delta_z As Variant
+        Dim symbols() As Variant
+        Dim basis1() As Variant
+        Dim basis2() As Variant
+        Dim basis3() As Variant
+        Dim X() As Variant
+        
+        A0 = Array(Range("K5", "K7").Value)
+        
+        With Range("B16", "P16")
+            .Borders(xlEdgeBottom).LineStyle = True
+            .Borders(xlEdgeLeft).LineStyle = True
+            .Borders(xlEdgeRight).LineStyle = True
+            .Borders(xlEdgeTop).LineStyle = True
+            .Borders(xlInsideVertical).LineStyle = True
+        
+        End With
+        
+        symbols = Array("Б", "С" & ChrW(&H431), "A" & ChrW(&H2080), "A" & ChrW(&H2081), _
+        "A" & ChrW(&H2082), "A" & ChrW(&H2083), "A" & ChrW(&H2084), "A" & ChrW(&H2085), _
+        "A" & ChrW(&H2086), ChrW(&H3B8) & ChrW(&H2081), ChrW(&H3B8) & ChrW(&H2082), _
+        ChrW(&H3B8) & ChrW(&H2083), ChrW(&H3B8) & ChrW(&H2084), ChrW(&H3B8) & ChrW(&H2085), _
+        ChrW(&H3B8) & ChrW(&H2086))
+        
+        For i = 0 To 14
+            Cells(16, i + 2).Value = symbols(i)
+        Next i
+        
+        With Range("B17", "D20")
+            .Borders(xlEdgeLeft).LineStyle = True
+            .Borders(xlEdgeRight).LineStyle = True
+            .Borders(xlInsideVertical).LineStyle = True
+        End With
+          
+        Range("B19", "P19").Borders(xlEdgeBottom).LineStyle = True
+        Range("J17", "J19").Borders(xlEdgeRight).LineStyle = True
+        Range("P17", "P19").Borders(xlEdgeRight).LineStyle = True
+        Range("B20", "P20").Borders(xlEdgeBottom).LineStyle = True
+        Range("J20").Borders(xlEdgeRight).LineStyle = True
+        Range("P20").Borders(xlEdgeRight).LineStyle = True
+        
+        A1 = Array(Range("D12").Value, Range("D13").Value, Range("D14").Value)
+        A2 = Array(Range("E12").Value, Range("E13").Value, Range("E14").Value)
+        A3 = Array(Range("F12").Value, Range("F13").Value, Range("F14").Value)
+        A4 = Array(Range("G12").Value, Range("G13").Value, Range("G14").Value)
+        A5 = Array(Range("H12").Value, Range("H13").Value, Range("H14").Value)
+        A6 = Array(Range("I12").Value, Range("I13").Value, Range("I14").Value)
+        
+        If A1(0) = -1 And A1(1) = 0 And A1(2) = 0 Or _
+           A2(0) = -1 And A2(1) = 0 And A2(2) = 0 Or _
+           A3(0) = -1 And A3(1) = 0 And A3(2) = 0 Or _
+           A4(0) = -1 And A4(1) = 0 And A4(2) = 0 Or _
+           A5(0) = -1 And A5(1) = 0 And A5(2) = 0 Or _
+           A6(0) = -1 And A6(1) = 0 And A6(2) = 0 Then
+            [D12:I12] = [D12:I12*-1]
+            [K12] = [K12*-1]
+        End If
+        
+        If A1(0) = 0 And A1(1) = -1 And A1(2) = 0 Or _
+           A2(0) = 0 And A2(1) = -1 And A2(2) = 0 Or _
+           A3(0) = 0 And A3(1) = -1 And A3(2) = 0 Or _
+           A4(0) = 0 And A4(1) = -1 And A4(2) = 0 Or _
+           A5(0) = 0 And A5(1) = -1 And A5(2) = 0 Or _
+           A6(0) = 0 And A6(1) = -1 And A6(2) = 0 Then
+            [D13:I13] = [D13:I13*-1]
+            [K13] = [K13*-1]
+        End If
+        
+        If A1(0) = 0 And A1(1) = 0 And A1(2) = -1 Or _
+           A2(0) = 0 And A2(1) = 0 And A2(2) = -1 Or _
+           A3(0) = 0 And A3(1) = 0 And A3(2) = -1 Or _
+           A4(0) = 0 And A4(1) = 0 And A4(2) = -1 Or _
+           A5(0) = 0 And A5(1) = 0 And A5(2) = -1 Or _
+           A6(0) = 0 And A6(1) = 0 And A6(2) = -1 Then
+            [D14:I14] = [D14:I14*-1]
+            [K14] = [K14*-1]
+        End If
+        
+        Erase A1, A2, A3, A4, A5, A6
+        
+        A1 = Array(Range("D12").Value, Range("D13").Value, Range("D14").Value)
+        A2 = Array(Range("E12").Value, Range("E13").Value, Range("E14").Value)
+        A3 = Array(Range("F12").Value, Range("F13").Value, Range("F14").Value)
+        A4 = Array(Range("G12").Value, Range("G13").Value, Range("G14").Value)
+        A5 = Array(Range("H12").Value, Range("H13").Value, Range("H14").Value)
+        A6 = Array(Range("I12").Value, Range("I13").Value, Range("I14").Value)
+        
+        basis A1(), A2(), A3(), A4(), A5(), A6(), B1, B2, B3, B_1, B_2, B_3
+                
+        Range("B17") = B1
+        Range("B18") = B2
+        Range("B19") = B3
+        
+        Ck = Array(Range("D10").Value, Range("E10").Value, Range("F10").Value, _
+        Range("G10").Value, Range("H10").Value, Range("I10").Value)
+        
+        C_b Cb(), B_1, B_2, B_3, Ck(), 17
+            
+        A0 = Array(Range("K12").Value, Range("K13").Value, Range("K14").Value)
+        For i = 0 To 2
+            Cells(i + 17, 4) = A0(i)
+        Next i
+            
+        Range("E17", "J19").Value = Range("D12", "I14").Value
+                
+        Call tetta(A0(), A1(), A2(), A3(), A4(), A5(), A6(), Q1(), Q2(), Q3(), Q4(), Q5(), Q6(), B_1, B_2, B_3, 17)
+        
+        Call search_delta_k(A0(), A1(), A2(), A3(), A4(), A5(), A6(), Cb(), Ck(), delta_k, _
+                       "C20", "D20", "E20", "F20", "G20", "H20", "I20", "J20")
+            
+        Call search_min_tetta(Q1(), Q2(), Q3(), Q4(), Q5(), Q6(), min_Q1, min_Q2, min_Q3, min_Q4, min_Q5, min_Q6, 17)
+        
+
+        delta_k = Array(Range("D20").Value, Range("E20").Value, _
+                        Range("F20").Value, Range("G20").Value, _
+                        Range("H20").Value, Range("I20").Value, _
+                        Range("J20").Value)
+                            
+        X = Array(0, 0, 0, 0, 0, 0, 0)
+         
+        If Range("K3").Value = "max" Then
+                        
+            Call optimal_solution_max(delta_k, X(), A0(), B_1, B_2, B_3, "K20", "P20", "Q17", _
+                      "S17", "B22", "G22")
+                        
+            Call No_solutions_max(A0(), A1(), A2(), A3(), A4(), A5(), A6(), delta_k, _
+            "K20", "P20", "B22", "F22")
+            
+            If delta_k(0) <= 0 Or delta_k(1) <= 0 Or delta_k(2) <= 0 Or delta_k(3) <= 0 _
+            Or delta_k(4) <= 0 Or delta_k(5) <= 0 Or delta_k(6) <= 0 Then
+                Range("K20", "P20") = ChrW(&H2206) & "k " & ChrW(&H2264) & " 0  =>  решение не оптимально"
+                delta_z = Array(-min_Q1 * delta_k(1), -min_Q2 * delta_k(2), -min_Q3 * delta_k(3), _
+                -min_Q4 * delta_k(4), -min_Q5 * delta_k(5), -min_Q6 * delta_k(6))
+                For i = 0 To 5
+                    If delta_z(i) = Empty Then
+                        delta_z(i) = 0
+                    End If
+                Next i
+            
+                Max = WorksheetFunction.Max(delta_z(0), delta_z(1), delta_z(2), _
+                delta_z(3), delta_z(4), delta_z(5))
+                    
+                Range("Q17", "T17").HorizontalAlignment = xlLeft
+                Range("Q17", "T17").Merge
+                Range("Q17", "T17").Value = ChrW(&H2206) & "z = max(" & Round(delta_z(0), 2) & "; " & _
+                Round(delta_z(1), 2) & "; " & Round(delta_z(2), 2) & "; " & Round(delta_z(3), 2) & "; " & Round(delta_z(4), 2) _
+                & "; " & delta_z(5) & ") = " & Max
+                If Max = delta_z(0) Then
+                    k = 1
+                ElseIf Max = delta_z(1) Then
+                    k = 2
+                ElseIf Max = delta_z(2) Then
+                    k = 3
+                ElseIf Max = delta_z(3) Then
+                    k = 4
+                ElseIf Max = delta_z(4) Then
+                    k = 5
+                ElseIf Max = delta_z(5) Then
+                    k = 6
+                End If
+                
+                l = 1
+                
+                'k - это столбец, а l - это строка
+                Range("Q18", "R18").Merge
+                Range("Q18", "R18").HorizontalAlignment = xlLeft
+                Range("Q18", "R18").Value = "k = " & k & ", l = " & l
+                
+                If l = 1 Then
+                    Row = 17
+                ElseIf l = 2 Then
+                    Row = 18
+                ElseIf l = 3 Then
+                    Row = 19
+                End If
+                
+                If k = 1 Then
+                    col = 5
+                ElseIf k = 2 Then
+                    col = 6
+                ElseIf k = 3 Then
+                    col = 7
+                ElseIf k = 4 Then
+                    col = 8
+                ElseIf k = 5 Then
+                    col = 9
+                ElseIf k = 6 Then
+                    col = 10
+                End If
+                
+                Cells(Row, col).Interior.Color = RGB(255, 255, 87)
+                
+                Range("B23", "P23").Borders(xlEdgeBottom).LineStyle = True
+                Range("J21", "J23").Borders(xlEdgeRight).LineStyle = True
+                Range("P21", "P23").Borders(xlEdgeRight).LineStyle = True
+                Range("B24", "P24").Borders(xlEdgeBottom).LineStyle = True
+                Range("J24").Borders(xlEdgeRight).LineStyle = True
+                Range("P24").Borders(xlEdgeRight).LineStyle = True
+                
+                With Range("B21", "D24")
+                    .Borders(xlEdgeLeft).LineStyle = True
+                    .Borders(xlEdgeRight).LineStyle = True
+                    .Borders(xlInsideVertical).LineStyle = True
+                End With
+                
+                stroka1 = Array(Range("D17"), Range("E17"), Range("F17"), _
+                                Range("G17"), Range("H17"), Range("I17"), _
+                                Range("J17"))
+                                  
+                stroka2 = Array(Range("D18"), Range("E18"), Range("F18"), _
+                                Range("G18"), Range("H18"), Range("I18"), _
+                                Range("J18"))
+                                  
+                stroka3 = Array(Range("D19"), Range("E19"), Range("F19"), _
+                                Range("G19"), Range("H19"), Range("I19"), _
+                                Range("J19"))
+                
+                For i = 0 To 6
+                    Cells(21, i + 4).Value = stroka1(i)
+                    Cells(22, i + 4).Value = stroka2(i)
+                    Cells(23, i + 4).Value = stroka3(i)
+                Next i
+                
+                If Cells(Row, col).Value <> 1 Then
+                    If l = 1 Then
+                        For i = 0 To 6
+                            Cells(21, i + 4).Value = Cells(Row, i + 4).Value / Cells(Row, col).Value
+                        Next i
+                    ElseIf l = 2 Then
+                        For i = 0 To 6
+                        Cells(22, i + 4).Value = Cells(Row, i + 4).Value / Cells(Row, col).Value
+                        Next i
+                    ElseIf l = 3 Then
+                        For i = 0 To 6
+                            Cells(23, i + 4).Value = Cells(Row, i + 4).Value / Cells(Row, col).Value
+                        Next i
+                    End If
+                End If
+                
+                If l = 1 Then
+                    coef1 = Cells(Row + 1, col).Value / Cells(Row, col).Value
+                    coef2 = Cells(Row + 2, col).Value / Cells(Row, col).Value
+                ElseIf l = 2 Then
+                    coef1 = Cells(Row - 1, col).Value / Cells(Row, col).Value
+                    coef2 = Cells(Row + 1, col).Value / Cells(Row, col).Value
+                ElseIf l = 3 Then
+                    coef1 = Cells(Row - 1, col).Value / Cells(Row, col).Value
+                    coef2 = Cells(Row - 2, col).Value / Cells(Row, col).Value
+                End If
+                
+                If l = 1 Then
+                    For i = 0 To 6
+                        stroka2(i) = (stroka1(i) * coef1) - stroka2(i)
+                        Cells(22, i + 4).Value = stroka2(i)
+                    Next i
+                ElseIf l = 2 Then
+                    For i = 0 To 6
+                        stroka1(i) = stroka2(i) * coef1 - stroka1(i)
+                        Cells(21, i + 4).Value = stroka1(i)
+                    Next i
+                ElseIf l = 3 Then
+                    For i = 0 To 6
+                        stroka2(i) = (stroka3(i) * coef1) - stroka2(i)
+                        Cells(22, i + 4).Value = stroka2(i)
+                    Next i
+                End If
+        
+                If l = 1 Then
+                    For i = 0 To 6
+                        stroka3(i) = (stroka1(i) * coef2) - stroka3(i)
+                        Cells(23, i + 4).Value = stroka3(i)
+                    Next i
+                ElseIf l = 2 Then
+                    For i = 0 To 6
+                        stroka3(i) = (stroka2(i) * coef2) - stroka3(i)
+                        Cells(23, i + 4).Value = stroka3(i)
+                    Next i
+                ElseIf l = 3 Then
+                    For i = 0 To 6
+                        stroka2(i) = (stroka3(i) * coef2) - stroka2(i)
+                        Cells(22, i + 4).Value = stroka2(i)
+                    Next i
+                End If
+                
+                Erase A1, A2, A3, A4, A5, A6
+        
+                A1 = Array(Range("E21").Value, Range("E22").Value, Range("E23").Value)
+                A2 = Array(Range("F21").Value, Range("F22").Value, Range("F23").Value)
+                A3 = Array(Range("G21").Value, Range("G22").Value, Range("G23").Value)
+                A4 = Array(Range("H21").Value, Range("H22").Value, Range("H23").Value)
+                A5 = Array(Range("I21").Value, Range("I22").Value, Range("I23").Value)
+                A6 = Array(Range("J21").Value, Range("J22").Value, Range("J23").Value)
+                
+                basis A1(), A2(), A3(), A4(), A5(), A6(), B1, B2, B3, B_1, B_2, B_3
+                
+                Range("B21").Value = B1
+                Range("B22").Value = B2
+                Range("B23").Value = B3
+        
+                If A1(0) = -1 And A1(1) = 0 And A1(2) = 0 Or _
+                   A2(0) = -1 And A2(1) = 0 And A2(2) = 0 Or _
+                   A3(0) = -1 And A3(1) = 0 And A3(2) = 0 Or _
+                   A4(0) = -1 And A4(1) = 0 And A4(2) = 0 Or _
+                   A5(0) = -1 And A5(1) = 0 And A5(2) = 0 Or _
+                   A6(0) = -1 And A6(1) = 0 And A6(2) = 0 Then
+                    [D21:J21] = [D21:J21*-1]
+                End If
+        
+                If A1(0) = 0 And A1(1) = -1 And A1(2) = 0 Or _
+                   A2(0) = 0 And A2(1) = -1 And A2(2) = 0 Or _
+                   A3(0) = 0 And A3(1) = -1 And A3(2) = 0 Or _
+                   A4(0) = 0 And A4(1) = -1 And A4(2) = 0 Or _
+                   A5(0) = 0 And A5(1) = -1 And A5(2) = 0 Or _
+                   A6(0) = 0 And A6(1) = -1 And A6(2) = 0 Then
+                    [D22:J22] = [D22:J22*-1]
+                End If
+                
+                If A1(0) = 0 And A1(1) = 0 And A1(2) = -1 Or _
+                   A2(0) = 0 And A2(1) = 0 And A2(2) = -1 Or _
+                   A3(0) = 0 And A3(1) = 0 And A3(2) = -1 Or _
+                   A4(0) = 0 And A4(1) = 0 And A4(2) = -1 Or _
+                   A5(0) = 0 And A5(1) = 0 And A5(2) = -1 Or _
+                   A6(0) = 0 And A6(1) = 0 And A6(2) = -1 Then
+                    [D23:J23] = [D23:J23*-1]
+                End If
+                
+                C_b Cb(), B_1, B_2, B_3, Ck(), 21
+                
+                Erase A0, A1, A2, A3, A4, A5, A6
+        
+                A0 = Array(Range("D21").Value, Range("D22").Value, Range("D23").Value)
+                A1 = Array(Range("E21").Value, Range("E22").Value, Range("E23").Value)
+                A2 = Array(Range("F21").Value, Range("F22").Value, Range("F23").Value)
+                A3 = Array(Range("G21").Value, Range("G22").Value, Range("G23").Value)
+                A4 = Array(Range("H21").Value, Range("H22").Value, Range("H23").Value)
+                A5 = Array(Range("I21").Value, Range("I22").Value, Range("I23").Value)
+                A6 = Array(Range("J21").Value, Range("J22").Value, Range("J23").Value)
+                
+                Call tetta(A0(), A1(), A2(), A3(), A4(), A5(), A6(), Q1(), Q2(), Q3(), Q4(), Q5(), Q6(), B_1, B_2, B_3, 21)
+                
+                Call search_delta_k(A0(), A1(), A2(), A3(), A4(), A5(), A6(), Cb(), Ck(), delta_k, _
+                       "C24", "D24", "E24", "F24", "G24", "H24", "I24", "J24")
+                
+                Call search_min_tetta(Q1(), Q2(), Q3(), Q4(), Q5(), Q6(), min_Q1, min_Q2, min_Q3, min_Q4, min_Q5, min_Q6, 21)
+                       
+                delta_k = Array(Range("D24").Value, Range("E24").Value, _
+                        Range("F24").Value, Range("G24").Value, _
+                        Range("H24").Value, Range("I24").Value, _
+                        Range("J24").Value)
+                
+                Call optimal_solution_max(delta_k, X(), A0(), B_1, B_2, B_3, "K24", "P24", "Q21", _
+                                          "S21", "B26", "G26")
+                      
+                Call No_solutions_max(A0(), A1(), A2(), A3(), A4(), A5(), A6(), delta_k, _
+                                      "K24", "P24", "B26", "F26")
+                                      
+                If delta_k(0) <= 0 Or delta_k(1) <= 0 Or delta_k(2) <= 0 Or delta_k(3) <= 0 _
+                Or delta_k(4) <= 0 Or delta_k(5) <= 0 Or delta_k(6) <= 0 Then
+                    Range("K24", "P24") = ChrW(&H2206) & "k " & ChrW(&H2264) & " 0  =>  решение не оптимально"
+                    delta_z = Array(-min_Q1 * delta_k(1), -min_Q2 * delta_k(2), -min_Q3 * delta_k(3), _
+                    -min_Q4 * delta_k(4), -min_Q5 * delta_k(5), -min_Q6 * delta_k(6))
+                    For i = 0 To 5
+                        If delta_z(i) = Empty Then
+                            delta_z(i) = 0
+                        End If
+                    Next i
+            
+                    Max = WorksheetFunction.Max(delta_z(0), delta_z(1), delta_z(2), _
+                    delta_z(3), delta_z(4), delta_z(5))
+                    
+                    Range("Q21", "T21").HorizontalAlignment = xlLeft
+                    Range("Q21", "T21").Merge
+                    Range("Q21", "T21").Value = ChrW(&H2206) & "z = max(" & Round(delta_z(0), 2) & "; " & _
+                    Round(delta_z(1), 2) & "; " & Round(delta_z(2), 2) & "; " & Round(delta_z(3), 2) & "; " & Round(delta_z(4), 2) _
+                    & "; " & delta_z(5) & ") = " & Max
+                    If Max = delta_z(0) Then
+                        k = 1
+                    ElseIf Max = delta_z(1) Then
+                        k = 2
+                    ElseIf Max = delta_z(2) Then
+                        k = 3
+                    ElseIf Max = delta_z(3) Then
+                        k = 4
+                    ElseIf Max = delta_z(4) Then
+                        k = 5
+                    ElseIf Max = delta_z(5) Then
+                        k = 6
+                    End If
+                    l = 2
+                    'k - это столбец, а l - это строка
+                    Range("Q22", "R22").Merge
+                    Range("Q22", "R22").HorizontalAlignment = xlLeft
+                    Range("Q22", "R22").Value = "k = " & k & ", l = " & l
+                    
+                    
+                    If l = 1 Then
+                        Row = 21
+                    ElseIf l = 2 Then
+                        Row = 22
+                    ElseIf l = 3 Then
+                        Row = 23
+                    End If
+                
+                    If k = 1 Then
+                        col = 5
+                    ElseIf k = 2 Then
+                        col = 6
+                    ElseIf k = 3 Then
+                        col = 7
+                    ElseIf k = 4 Then
+                        col = 8
+                    ElseIf k = 5 Then
+                        col = 9
+                    ElseIf k = 6 Then
+                        col = 10
+                    End If
+                
+                    Cells(Row, col).Interior.Color = RGB(255, 255, 87)
+                
+                    Range("B27", "P27").Borders(xlEdgeBottom).LineStyle = True
+                    Range("J25", "J27").Borders(xlEdgeRight).LineStyle = True
+                    Range("P25", "P27").Borders(xlEdgeRight).LineStyle = True
+                    Range("B28", "P28").Borders(xlEdgeBottom).LineStyle = True
+                    Range("J28").Borders(xlEdgeRight).LineStyle = True
+                    Range("P28").Borders(xlEdgeRight).LineStyle = True
+                
+                    With Range("B25", "D28")
+                        .Borders(xlEdgeLeft).LineStyle = True
+                        .Borders(xlEdgeRight).LineStyle = True
+                        .Borders(xlInsideVertical).LineStyle = True
+                    End With
+                    
+                    Erase stroka1, stroka2, stroka3
+                    
+                    stroka1 = Array(Range("D21"), Range("E21"), Range("F21"), _
+                                    Range("G21"), Range("H21"), Range("I21"), _
+                                    Range("J21"))
+                                  
+                    stroka2 = Array(Range("D22"), Range("E22"), Range("F22"), _
+                                    Range("G22"), Range("H22"), Range("I22"), _
+                                    Range("J22"))
+                                  
+                    stroka3 = Array(Range("D23"), Range("E23"), Range("F23"), _
+                                    Range("G23"), Range("H23"), Range("I23"), _
+                                    Range("J23"))
+                
+                    For i = 0 To 6
+                        Cells(25, i + 4).Value = stroka1(i)
+                        Cells(26, i + 4).Value = stroka2(i)
+                        Cells(27, i + 4).Value = stroka3(i)
+                    Next i
+                
+                    If Cells(Row, col).Value <> 1 Then
+                        If l = 1 Then
+                            For i = 0 To 6
+                                Cells(25, i + 4).Value = Cells(Row, i + 4).Value / Cells(Row, col).Value
+                            Next i
+                        ElseIf l = 2 Then
+                            For i = 0 To 6
+                                Cells(26, i + 4).Value = Cells(Row, i + 4).Value / Cells(Row, col).Value
+                            Next i
+                        ElseIf l = 3 Then
+                            For i = 0 To 6
+                                Cells(27, i + 4).Value = Cells(Row, i + 4).Value / Cells(Row, col).Value
+                            Next i
+                        End If
+                    End If
+                
+                    If l = 1 Then
+                        coef1 = Cells(Row + 1, col).Value / Cells(Row, col).Value
+                        coef2 = Cells(Row + 2, col).Value / Cells(Row, col).Value
+                    ElseIf l = 2 Then
+                        coef1 = Cells(Row - 1, col).Value / Cells(Row, col).Value
+                        coef2 = Cells(Row + 1, col).Value / Cells(Row, col).Value
+                    ElseIf l = 3 Then
+                        coef1 = Cells(Row - 1, col).Value / Cells(Row, col).Value
+                        coef2 = Cells(Row - 2, col).Value / Cells(Row, col).Value
+                    End If
+                
+                    If l = 1 Then
+                        For i = 0 To 6
+                            stroka2(i) = (stroka1(i) * coef1) - stroka2(i)
+                            Cells(26, i + 4).Value = stroka2(i)
+                        Next i
+                    ElseIf l = 2 Then
+                        For i = 0 To 6
+                            stroka1(i) = stroka2(i) * coef1 - stroka1(i)
+                            Cells(25, i + 4).Value = stroka1(i)
+                        Next i
+                    ElseIf l = 3 Then
+                        For i = 0 To 6
+                            stroka2(i) = (stroka3(i) * coef1) - stroka2(i)
+                            Cells(26, i + 4).Value = stroka2(i)
+                        Next i
+                    End If
+        
+                    If l = 1 Then
+                        For i = 0 To 6
+                            stroka3(i) = (stroka1(i) * coef2) - stroka3(i)
+                            Cells(27, i + 4).Value = stroka3(i)
+                        Next i
+                    ElseIf l = 2 Then
+                        For i = 0 To 6
+                            stroka3(i) = (stroka2(i) * coef2) - stroka3(i)
+                            Cells(27, i + 4).Value = stroka3(i)
+                        Next i
+                    ElseIf l = 3 Then
+                        For i = 0 To 6
+                            stroka2(i) = (stroka3(i) * coef2) - stroka2(i)
+                            Cells(26, i + 4).Value = stroka2(i)
+                        Next i
+                    End If
+                
+                    Erase A1, A2, A3, A4, A5, A6
+        
+                    A1 = Array(Range("E25").Value, Range("E26").Value, Range("E27").Value)
+                    A2 = Array(Range("F25").Value, Range("F26").Value, Range("F27").Value)
+                    A3 = Array(Range("G25").Value, Range("G26").Value, Range("G27").Value)
+                    A4 = Array(Range("H25").Value, Range("H26").Value, Range("H27").Value)
+                    A5 = Array(Range("I25").Value, Range("I26").Value, Range("I27").Value)
+                    A6 = Array(Range("J25").Value, Range("J26").Value, Range("J27").Value)
+                
+                    basis A1(), A2(), A3(), A4(), A5(), A6(), B1, B2, B3, B_1, B_2, B_3
+                
+                    Range("B25").Value = B1
+                    Range("B26").Value = B2
+                    Range("B27").Value = B3
+        
+                    If A1(0) = -1 And A1(1) = 0 And A1(2) = 0 Or _
+                       A2(0) = -1 And A2(1) = 0 And A2(2) = 0 Or _
+                       A3(0) = -1 And A3(1) = 0 And A3(2) = 0 Or _
+                       A4(0) = -1 And A4(1) = 0 And A4(2) = 0 Or _
+                       A5(0) = -1 And A5(1) = 0 And A5(2) = 0 Or _
+                       A6(0) = -1 And A6(1) = 0 And A6(2) = 0 Then
+                        [D25:J25] = [D25:J25*-1]
+                    End If
+        
+                    If A1(0) = 0 And A1(1) = -1 And A1(2) = 0 Or _
+                       A2(0) = 0 And A2(1) = -1 And A2(2) = 0 Or _
+                       A3(0) = 0 And A3(1) = -1 And A3(2) = 0 Or _
+                       A4(0) = 0 And A4(1) = -1 And A4(2) = 0 Or _
+                       A5(0) = 0 And A5(1) = -1 And A5(2) = 0 Or _
+                       A6(0) = 0 And A6(1) = -1 And A6(2) = 0 Then
+                        [D26:J26] = [D26:J26*-1]
+                    End If
+                
+                    If A1(0) = 0 And A1(1) = 0 And A1(2) = -1 Or _
+                       A2(0) = 0 And A2(1) = 0 And A2(2) = -1 Or _
+                       A3(0) = 0 And A3(1) = 0 And A3(2) = -1 Or _
+                       A4(0) = 0 And A4(1) = 0 And A4(2) = -1 Or _
+                       A5(0) = 0 And A5(1) = 0 And A5(2) = -1 Or _
+                       A6(0) = 0 And A6(1) = 0 And A6(2) = -1 Then
+                        [D27:J27] = [D27:J27*-1]
+                    End If
+                
+                    C_b Cb(), B_1, B_2, B_3, Ck(), 25
+                
+                    Erase A0, A1, A2, A3, A4, A5, A6
+        
+                    A0 = Array(Range("D25").Value, Range("D26").Value, Range("D27").Value)
+                    A1 = Array(Range("E25").Value, Range("E26").Value, Range("E27").Value)
+                    A2 = Array(Range("F25").Value, Range("F26").Value, Range("F27").Value)
+                    A3 = Array(Range("G25").Value, Range("G26").Value, Range("G27").Value)
+                    A4 = Array(Range("H25").Value, Range("H26").Value, Range("H27").Value)
+                    A5 = Array(Range("I25").Value, Range("I26").Value, Range("I27").Value)
+                    A6 = Array(Range("J25").Value, Range("J26").Value, Range("J27").Value)
+                
+                    Call tetta(A0(), A1(), A2(), A3(), A4(), A5(), A6(), Q1(), Q2(), Q3(), Q4(), Q5(), Q6(), B_1, B_2, B_3, 25)
+                
+                    Call search_min_tetta(Q1(), Q2(), Q3(), Q4(), Q5(), Q6(), min_Q1, min_Q2, min_Q3, min_Q4, min_Q5, min_Q6, 25)
+                
+                    Call search_delta_k(A0(), A1(), A2(), A3(), A4(), A5(), A6(), Cb(), Ck(), delta_k, _
+                                        "C28", "D28", "E28", "F28", "G28", "H28", "I28", "J28")
+                       
+                    delta_k = Array(Range("D28").Value, Range("E28").Value, _
+                                    Range("F28").Value, Range("G28").Value, _
+                                    Range("H28").Value, Range("I28").Value, _
+                                    Range("J28").Value)
+                
+                    Call optimal_solution_max(delta_k, X(), A0(), B_1, B_2, B_3, "K28", "P28", "Q25", _
+                                              "S25", "B30", "G30")
+                      
+                    Call No_solutions_max(A0(), A1(), A2(), A3(), A4(), A5(), A6(), delta_k, _
+                                          "K28", "P28", "B30", "F30")
+
+            
+                End If
+                
+            End If
+        ElseIf Range("K3").Value = "min" Then
+            
+            Call optimal_solution_min(delta_k, X(), A0(), B_1, B_2, B_3, "K20", "P20", "Q17", _
+                      "S17", "B22", "G22")
+            
+            Call No_solutions_min(A0(), A1(), A2(), A3(), A4(), A5(), A6(), delta_k, _
+            "K20", "P20", "B22", "F22")
+                
+            If delta_k(0) >= 0 Or delta_k(1) >= 0 Or delta_k(2) >= 0 Or delta_k(3) >= 0 _
+            Or delta_k(4) >= 0 Or delta_k(5) >= 0 Or delta_k(6) >= 0 Then
+                Range("K20", "P20") = ChrW(&H2206) & "k " & ChrW(&H2265) & " 0  =>  решение не оптимально"
+                delta_z = Array(min_Q1 * delta_k(1), min_Q2 * delta_k(2), min_Q3 * delta_k(3), _
+                min_Q4 * delta_k(4), min_Q5 * delta_k(5), min_Q6 * delta_k(6))
+                For i = 0 To 5
+                    If delta_z(i) = Empty Then
+                        delta_z(i) = 0
+                    End If
+                Next i
+            
+                Min = WorksheetFunction.Min(delta_z(0), delta_z(1), delta_z(2), _
+                delta_z(3), delta_z(4), delta_z(5))
+                    
+                Range("Q17", "T17").HorizontalAlignment = xlLeft
+                Range("Q17", "T17").Merge
+                Range("Q17", "T17").Value = ChrW(&H2206) & "z = min(" & Round(delta_z(0), 2) & "; " & _
+                Round(delta_z(1), 2) & "; " & Round(delta_z(2), 2) & "; " & Round(delta_z(3), 2) & _
+                "; " & Round(delta_z(4), 2) & "; " & Round(delta_z(5), 2) & ") = " & Min
+                    
+                If Min = delta_z(0) Then
+                    k = 1
+                ElseIf Min = delta_z(1) Then
+                    k = 2
+                ElseIf Min = delta_z(2) Then
+                    k = 3
+                ElseIf Min = delta_z(3) Then
+                    k = 4
+                ElseIf Min = delta_z(4) Then
+                    k = 5
+                ElseIf Min = delta_z(5) Then
+                    k = 6
+                End If
+                    
+                'k - это столбец, а l - это строка
+                Range("Q18", "R18").Merge
+                Range("Q18", "R18").HorizontalAlignment = xlLeft
+                Range("Q18", "R18").Value = "k = " & k & ", l = " & l
+                
+                If l = 1 Then
+                    Row = 17
+                ElseIf l = 2 Then
+                    Row = 18
+                ElseIf l = 3 Then
+                    Row = 19
+                End If
+                
+                If k = 1 Then
+                    col = 5
+                ElseIf k = 2 Then
+                    col = 6
+                ElseIf k = 3 Then
+                    col = 7
+                ElseIf k = 4 Then
+                    col = 8
+                ElseIf k = 5 Then
+                    col = 9
+                ElseIf k = 6 Then
+                    col = 10
+                End If
+                
+                Cells(Row, col).Interior.Color = RGB(255, 255, 87)
+                
+                Range("B23", "P23").Borders(xlEdgeBottom).LineStyle = True
+                Range("J21", "J23").Borders(xlEdgeRight).LineStyle = True
+                Range("P21", "P23").Borders(xlEdgeRight).LineStyle = True
+                Range("B24", "P24").Borders(xlEdgeBottom).LineStyle = True
+                Range("J24").Borders(xlEdgeRight).LineStyle = True
+                Range("P24").Borders(xlEdgeRight).LineStyle = True
+                
+                With Range("B21", "D24")
+                    .Borders(xlEdgeLeft).LineStyle = True
+                    .Borders(xlEdgeRight).LineStyle = True
+                    .Borders(xlInsideVertical).LineStyle = True
+                End With
+                
+                stroka1 = Array(Range("D17"), Range("E17"), Range("F17"), _
+                                Range("G17"), Range("H17"), Range("I17"), _
+                                Range("J17"))
+                                  
+                stroka2 = Array(Range("D18"), Range("E18"), Range("F18"), _
+                                Range("G18"), Range("H18"), Range("I18"), _
+                                Range("J18"))
+                                  
+                stroka3 = Array(Range("D19"), Range("E19"), Range("F19"), _
+                                Range("G19"), Range("H19"), Range("I19"), _
+                                Range("J19"))
+                
+                For i = 0 To 6
+                    Cells(21, i + 4).Value = stroka1(i)
+                    Cells(22, i + 4).Value = stroka2(i)
+                    Cells(23, i + 4).Value = stroka3(i)
+                Next i
+                
+                If Cells(Row, col).Value <> 1 Then
+                    If l = 1 Then
+                        For i = 0 To 6
+                            Cells(21, i + 4).Value = Cells(Row, i + 4).Value / Cells(Row, col).Value
+                        Next i
+                    ElseIf l = 2 Then
+                        For i = 0 To 6
+                        Cells(22, i + 4).Value = Cells(Row, i + 4).Value / Cells(Row, col).Value
+                        Next i
+                    ElseIf l = 3 Then
+                        For i = 0 To 6
+                            Cells(23, i + 4).Value = Cells(Row, i + 4).Value / Cells(Row, col).Value
+                        Next i
+                    End If
+                End If
+                
+                If l = 1 Then
+                    coef1 = Cells(Row + 1, col).Value / Cells(Row, col).Value
+                    coef2 = Cells(Row + 2, col).Value / Cells(Row, col).Value
+                ElseIf l = 2 Then
+                    coef1 = Cells(Row - 1, col).Value / Cells(Row, col).Value
+                    coef2 = Cells(Row + 1, col).Value / Cells(Row, col).Value
+                ElseIf l = 3 Then
+                    coef1 = Cells(Row - 1, col).Value / Cells(Row, col).Value
+                    coef2 = Cells(Row - 2, col).Value / Cells(Row, col).Value
+                End If
+                
+                If l = 1 Then
+                    For i = 0 To 6
+                        stroka2(i) = (stroka1(i) * coef1) - stroka2(i)
+                        Cells(22, i + 4).Value = stroka2(i)
+                    Next i
+                ElseIf l = 2 Then
+                    For i = 0 To 6
+                        stroka1(i) = stroka2(i) * coef1 - stroka1(i)
+                        Cells(21, i + 4).Value = stroka1(i)
+                    Next i
+                ElseIf l = 3 Then
+                    For i = 0 To 6
+                        stroka2(i) = (stroka3(i) * coef1) - stroka2(i)
+                        Cells(22, i + 4).Value = stroka2(i)
+                    Next i
+                End If
+        
+                If l = 1 Then
+                    For i = 0 To 6
+                        stroka3(i) = (stroka1(i) * coef2) - stroka3(i)
+                        Cells(23, i + 4).Value = stroka3(i)
+                    Next i
+                ElseIf l = 2 Then
+                    For i = 0 To 6
+                        stroka3(i) = (stroka2(i) * coef2) - stroka3(i)
+                        Cells(23, i + 4).Value = stroka3(i)
+                    Next i
+                ElseIf l = 3 Then
+                    For i = 0 To 6
+                        stroka2(i) = (stroka3(i) * coef2) - stroka2(i)
+                        Cells(22, i + 4).Value = stroka2(i)
+                    Next i
+                End If
+                
+                Erase A1, A2, A3, A4, A5, A6
+        
+                A1 = Array(Range("E21").Value, Range("E22").Value, Range("E23").Value)
+                A2 = Array(Range("F21").Value, Range("F22").Value, Range("F23").Value)
+                A3 = Array(Range("G21").Value, Range("G22").Value, Range("G23").Value)
+                A4 = Array(Range("H21").Value, Range("H22").Value, Range("H23").Value)
+                A5 = Array(Range("I21").Value, Range("I22").Value, Range("I23").Value)
+                A6 = Array(Range("J21").Value, Range("J22").Value, Range("J23").Value)
+                
+                basis A1(), A2(), A3(), A4(), A5(), A6(), B1, B2, B3, B_1, B_2, B_3
+                
+                Range("B21").Value = B1
+                Range("B22").Value = B2
+                Range("B23").Value = B3
+        
+                If A1(0) = -1 And A1(1) = 0 And A1(2) = 0 Or _
+                   A2(0) = -1 And A2(1) = 0 And A2(2) = 0 Or _
+                   A3(0) = -1 And A3(1) = 0 And A3(2) = 0 Or _
+                   A4(0) = -1 And A4(1) = 0 And A4(2) = 0 Or _
+                   A5(0) = -1 And A5(1) = 0 And A5(2) = 0 Or _
+                   A6(0) = -1 And A6(1) = 0 And A6(2) = 0 Then
+                    [D21:J21] = [D21:J21*-1]
+                End If
+        
+                If A1(0) = 0 And A1(1) = -1 And A1(2) = 0 Or _
+                   A2(0) = 0 And A2(1) = -1 And A2(2) = 0 Or _
+                   A3(0) = 0 And A3(1) = -1 And A3(2) = 0 Or _
+                   A4(0) = 0 And A4(1) = -1 And A4(2) = 0 Or _
+                   A5(0) = 0 And A5(1) = -1 And A5(2) = 0 Or _
+                   A6(0) = 0 And A6(1) = -1 And A6(2) = 0 Then
+                    [D22:J22] = [D22:J22*-1]
+                End If
+                
+                If A1(0) = 0 And A1(1) = 0 And A1(2) = -1 Or _
+                   A2(0) = 0 And A2(1) = 0 And A2(2) = -1 Or _
+                   A3(0) = 0 And A3(1) = 0 And A3(2) = -1 Or _
+                   A4(0) = 0 And A4(1) = 0 And A4(2) = -1 Or _
+                   A5(0) = 0 And A5(1) = 0 And A5(2) = -1 Or _
+                   A6(0) = 0 And A6(1) = 0 And A6(2) = -1 Then
+                    [D23:J23] = [D23:J23*-1]
+                End If
+                
+                C_b Cb(), B_1, B_2, B_3, Ck(), 21
+                
+                Erase A0, A1, A2, A3, A4, A5, A6
+        
+                A0 = Array(Range("D21").Value, Range("D22").Value, Range("D23").Value)
+                A1 = Array(Range("E21").Value, Range("E22").Value, Range("E23").Value)
+                A2 = Array(Range("F21").Value, Range("F22").Value, Range("F23").Value)
+                A3 = Array(Range("G21").Value, Range("G22").Value, Range("G23").Value)
+                A4 = Array(Range("H21").Value, Range("H22").Value, Range("H23").Value)
+                A5 = Array(Range("I21").Value, Range("I22").Value, Range("I23").Value)
+                A6 = Array(Range("J21").Value, Range("J22").Value, Range("J23").Value)
+                
+                Call tetta(A0(), A1(), A2(), A3(), A4(), A5(), A6(), Q1(), Q2(), Q3(), Q4(), Q5(), Q6(), B_1, B_2, B_3, 21)
+                
+                Call search_delta_k(A0(), A1(), A2(), A3(), A4(), A5(), A6(), Cb(), Ck(), delta_k, _
+                       "C24", "D24", "E24", "F24", "G24", "H24", "I24", "J24")
+                
+                Call search_min_tetta(Q1(), Q2(), Q3(), Q4(), Q5(), Q6(), min_Q1, min_Q2, min_Q3, min_Q4, min_Q5, min_Q6, 21)
+                       
+                delta_k = Array(Range("D24").Value, Range("E24").Value, _
+                        Range("F24").Value, Range("G24").Value, _
+                        Range("H24").Value, Range("I24").Value, _
+                        Range("J24").Value)
+                
+                Call optimal_solution_min(delta_k, X(), A0(), B_1, B_2, B_3, "K24", "P24", "Q21", _
+                                          "S21", "B26", "G26")
+                      
+                Call No_solutions_min(A0(), A1(), A2(), A3(), A4(), A5(), A6(), delta_k, _
+                                      "K24", "P24", "B26", "F26")
+                                      
+                If delta_k(0) >= 0 Or delta_k(1) >= 0 Or delta_k(2) >= 0 Or delta_k(3) >= 0 _
+                Or delta_k(4) >= 0 Or delta_k(5) >= 0 Or delta_k(6) >= 0 Then
+                    Range("K24", "P24") = ChrW(&H2206) & "k " & ChrW(&H2264) & " 0  =>  решение не оптимально"
+                    delta_z = Array(-min_Q1 * delta_k(1), -min_Q2 * delta_k(2), -min_Q3 * delta_k(3), _
+                    -min_Q4 * delta_k(4), -min_Q5 * delta_k(5), -min_Q6 * delta_k(6))
+                    For i = 0 To 5
+                        If delta_z(i) = Empty Then
+                            delta_z(i) = 0
+                        End If
+                    Next i
+            
+                    Min = WorksheetFunction.Min(delta_z(0), delta_z(1), delta_z(2), _
+                    delta_z(3), delta_z(4), delta_z(5))
+                    
+                    Range("Q21", "T21").HorizontalAlignment = xlLeft
+                    Range("Q21", "T21").Merge
+                    Range("Q21", "T21").Value = ChrW(&H2206) & "z = max(" & Round(delta_z(0), 2) & "; " & _
+                    Round(delta_z(1), 2) & "; " & Round(delta_z(2), 2) & "; " & Round(delta_z(3), 2) & "; " & Round(delta_z(4), 2) _
+                    & "; " & delta_z(5) & ") = " & Min
+                    If Min = delta_z(0) Then
+                        k = 1
+                    ElseIf Min = delta_z(1) Then
+                        k = 2
+                    ElseIf Min = delta_z(2) Then
+                        k = 3
+                    ElseIf Min = delta_z(3) Then
+                        k = 4
+                    ElseIf Min = delta_z(4) Then
+                        k = 5
+                    ElseIf Min = delta_z(5) Then
+                        k = 6
+                    End If
+                    l = 2
+                    'k - это столбец, а l - это строка
+                    Range("Q22", "R22").Merge
+                    Range("Q22", "R22").HorizontalAlignment = xlLeft
+                    Range("Q22", "R22").Value = "k = " & k & ", l = " & l
+                    
+                    
+                    If l = 1 Then
+                        Row = 21
+                    ElseIf l = 2 Then
+                        Row = 22
+                    ElseIf l = 3 Then
+                        Row = 23
+                    End If
+                
+                    If k = 1 Then
+                        col = 5
+                    ElseIf k = 2 Then
+                        col = 6
+                    ElseIf k = 3 Then
+                        col = 7
+                    ElseIf k = 4 Then
+                        col = 8
+                    ElseIf k = 5 Then
+                        col = 9
+                    ElseIf k = 6 Then
+                        col = 10
+                    End If
+                
+                    Cells(Row, col).Interior.Color = RGB(255, 255, 87)
+                
+                    Range("B27", "P27").Borders(xlEdgeBottom).LineStyle = True
+                    Range("J25", "J27").Borders(xlEdgeRight).LineStyle = True
+                    Range("P25", "P27").Borders(xlEdgeRight).LineStyle = True
+                    Range("B28", "P28").Borders(xlEdgeBottom).LineStyle = True
+                    Range("J28").Borders(xlEdgeRight).LineStyle = True
+                    Range("P28").Borders(xlEdgeRight).LineStyle = True
+                
+                    With Range("B25", "D28")
+                        .Borders(xlEdgeLeft).LineStyle = True
+                        .Borders(xlEdgeRight).LineStyle = True
+                        .Borders(xlInsideVertical).LineStyle = True
+                    End With
+                    
+                    Erase stroka1, stroka2, stroka3
+                    
+                    stroka1 = Array(Range("D25"), Range("E25"), Range("F25"), _
+                                    Range("G25"), Range("H25"), Range("I25"), _
+                                    Range("J25"))
+                                  
+                    stroka2 = Array(Range("D26"), Range("E26"), Range("F26"), _
+                                    Range("G26"), Range("H26"), Range("I26"), _
+                                    Range("J26"))
+                                  
+                    stroka3 = Array(Range("D27"), Range("E27"), Range("F27"), _
+                                    Range("G27"), Range("H27"), Range("I27"), _
+                                    Range("J27"))
+                
+                    For i = 0 To 6
+                        Cells(25, i + 4).Value = stroka1(i)
+                        Cells(26, i + 4).Value = stroka2(i)
+                        Cells(27, i + 4).Value = stroka3(i)
+                    Next i
+                
+                    If Cells(Row, col).Value <> 1 Then
+                        If l = 1 Then
+                            For i = 0 To 6
+                                Cells(25, i + 4).Value = Cells(Row, i + 4).Value / Cells(Row, col).Value
+                            Next i
+                        ElseIf l = 2 Then
+                            For i = 0 To 6
+                                Cells(26, i + 4).Value = Cells(Row, i + 4).Value / Cells(Row, col).Value
+                            Next i
+                        ElseIf l = 3 Then
+                            For i = 0 To 6
+                                Cells(27, i + 4).Value = Cells(Row, i + 4).Value / Cells(Row, col).Value
+                            Next i
+                        End If
+                    End If
+                
+                    If l = 1 Then
+                        coef1 = Cells(Row + 1, col).Value / Cells(Row, col).Value
+                        coef2 = Cells(Row + 2, col).Value / Cells(Row, col).Value
+                    ElseIf l = 2 Then
+                        coef1 = Cells(Row - 1, col).Value / Cells(Row, col).Value
+                        coef2 = Cells(Row + 1, col).Value / Cells(Row, col).Value
+                    ElseIf l = 3 Then
+                        coef1 = Cells(Row - 1, col).Value / Cells(Row, col).Value
+                        coef2 = Cells(Row - 2, col).Value / Cells(Row, col).Value
+                    End If
+                
+                    If l = 1 Then
+                        For i = 0 To 6
+                            stroka2(i) = (stroka1(i) * coef1) - stroka2(i)
+                            Cells(26, i + 4).Value = stroka2(i)
+                        Next i
+                    ElseIf l = 2 Then
+                        For i = 0 To 6
+                            stroka1(i) = stroka2(i) * coef1 - stroka1(i)
+                            Cells(25, i + 4).Value = stroka1(i)
+                        Next i
+                    ElseIf l = 3 Then
+                        For i = 0 To 6
+                            stroka2(i) = (stroka3(i) * coef1) - stroka2(i)
+                            Cells(26, i + 4).Value = stroka2(i)
+                        Next i
+                    End If
+        
+                    If l = 1 Then
+                        For i = 0 To 6
+                            stroka3(i) = (stroka1(i) * coef2) - stroka3(i)
+                            Cells(27, i + 4).Value = stroka3(i)
+                        Next i
+                    ElseIf l = 2 Then
+                        For i = 0 To 6
+                            stroka3(i) = (stroka2(i) * coef2) - stroka3(i)
+                            Cells(27, i + 4).Value = stroka3(i)
+                        Next i
+                    ElseIf l = 3 Then
+                        For i = 0 To 6
+                            stroka2(i) = (stroka3(i) * coef2) - stroka2(i)
+                            Cells(26, i + 4).Value = stroka2(i)
+                        Next i
+                    End If
+                
+                    Erase A1, A2, A3, A4, A5, A6
+        
+                    A1 = Array(Range("E25").Value, Range("E26").Value, Range("E27").Value)
+                    A2 = Array(Range("F25").Value, Range("F26").Value, Range("F27").Value)
+                    A3 = Array(Range("G25").Value, Range("G26").Value, Range("G27").Value)
+                    A4 = Array(Range("H25").Value, Range("H26").Value, Range("H27").Value)
+                    A5 = Array(Range("I25").Value, Range("I26").Value, Range("I27").Value)
+                    A6 = Array(Range("J25").Value, Range("J26").Value, Range("J27").Value)
+                
+                    basis A1(), A2(), A3(), A4(), A5(), A6(), B1, B2, B3, B_1, B_2, B_3
+                
+                    Range("B25").Value = B1
+                    Range("B26").Value = B2
+                    Range("B27").Value = B3
+        
+                    If A1(0) = -1 And A1(1) = 0 And A1(2) = 0 Or _
+                       A2(0) = -1 And A2(1) = 0 And A2(2) = 0 Or _
+                       A3(0) = -1 And A3(1) = 0 And A3(2) = 0 Or _
+                       A4(0) = -1 And A4(1) = 0 And A4(2) = 0 Or _
+                       A5(0) = -1 And A5(1) = 0 And A5(2) = 0 Or _
+                       A6(0) = -1 And A6(1) = 0 And A6(2) = 0 Then
+                        [D25:J25] = [D25:J25*-1]
+                    End If
+        
+                    If A1(0) = 0 And A1(1) = -1 And A1(2) = 0 Or _
+                       A2(0) = 0 And A2(1) = -1 And A2(2) = 0 Or _
+                       A3(0) = 0 And A3(1) = -1 And A3(2) = 0 Or _
+                       A4(0) = 0 And A4(1) = -1 And A4(2) = 0 Or _
+                       A5(0) = 0 And A5(1) = -1 And A5(2) = 0 Or _
+                       A6(0) = 0 And A6(1) = -1 And A6(2) = 0 Then
+                        [D26:J26] = [D26:J26*-1]
+                    End If
+                
+                    If A1(0) = 0 And A1(1) = 0 And A1(2) = -1 Or _
+                       A2(0) = 0 And A2(1) = 0 And A2(2) = -1 Or _
+                       A3(0) = 0 And A3(1) = 0 And A3(2) = -1 Or _
+                       A4(0) = 0 And A4(1) = 0 And A4(2) = -1 Or _
+                       A5(0) = 0 And A5(1) = 0 And A5(2) = -1 Or _
+                       A6(0) = 0 And A6(1) = 0 And A6(2) = -1 Then
+                        [D27:J27] = [D27:J27*-1]
+                    End If
+                
+                    C_b Cb(), B_1, B_2, B_3, Ck(), 25
+                
+                    Erase A0, A1, A2, A3, A4, A5, A6
+        
+                    A0 = Array(Range("D25").Value, Range("D26").Value, Range("D27").Value)
+                    A1 = Array(Range("E25").Value, Range("E26").Value, Range("E27").Value)
+                    A2 = Array(Range("F25").Value, Range("F26").Value, Range("F27").Value)
+                    A3 = Array(Range("G25").Value, Range("G26").Value, Range("G27").Value)
+                    A4 = Array(Range("H25").Value, Range("H26").Value, Range("H27").Value)
+                    A5 = Array(Range("I25").Value, Range("I26").Value, Range("I27").Value)
+                    A6 = Array(Range("J25").Value, Range("J26").Value, Range("J27").Value)
+                
+                    Call tetta(A0(), A1(), A2(), A3(), A4(), A5(), A6(), Q1(), Q2(), Q3(), Q4(), Q5(), Q6(), B_1, B_2, B_3, 25)
+                
+                    Call search_min_tetta(Q1(), Q2(), Q3(), Q4(), Q5(), Q6(), min_Q1, min_Q2, min_Q3, min_Q4, min_Q5, min_Q6, 25)
+                
+                    Call search_delta_k(A0(), A1(), A2(), A3(), A4(), A5(), A6(), Cb(), Ck(), delta_k, _
+                                        "C28", "D28", "E28", "F28", "G28", "H28", "I28", "J28")
+                       
+                    delta_k = Array(Range("D28").Value, Range("E28").Value, _
+                                    Range("F28").Value, Range("G28").Value, _
+                                    Range("H28").Value, Range("I28").Value, _
+                                    Range("J28").Value)
+                
+                    Call optimal_solution_min(delta_k, X(), A0(), B_1, B_2, B_3, "K28", "P28", "Q25", _
+                                              "S25", "B30", "G30")
+                      
+                    Call No_solutions_min(A0(), A1(), A2(), A3(), A4(), A5(), A6(), delta_k, _
+                                          "K28", "P28", "B30", "F30")
+
+            
+                End If
+                    
+            End If
+        End If
+End Sub
