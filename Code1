@@ -1,0 +1,53 @@
+// Код кнопки создания ЗЛП
+Sub Button1_create_task()
+    'Оформление
+    Range("B2", "S100").HorizontalAlignment = xlCenter
+    Range("B2", "S100").Font.Name = "Times New Roman"
+    Range("B2", "K2").Merge
+    Range("B2", "K2") = "Исходная ЗЛП"
+    With Range("B2", "K7")
+        .Borders(xlEdgeBottom).LineStyle = True
+        .Borders(xlEdgeBottom).Weight = 3
+        .Borders(xlEdgeTop).LineStyle = True
+        .Borders(xlEdgeTop).Weight = 3
+        .Borders(xlEdgeRight).LineStyle = True
+        .Borders(xlEdgeRight).Weight = 3
+        .Borders(xlEdgeLeft).LineStyle = True
+        .Borders(xlEdgeLeft).Weight = 3
+    End With
+    'Задаём целевую функцию
+    choice = MsgBox("Хотите ли вы ввести систему самостоятельно?", _
+    vbYesNoCancel, "Выбор ввода")
+    If choice = 6 Then
+        UserForm1.Show
+    ElseIf choice = 7 Then
+        Dim cell As Range
+        Randomize
+        Dim max_or_min()
+        max_or_min = Array("min", "max")
+        Range("K3") = max_or_min(CStr(Rnd))
+        For Each cell In Range("D3", "F3")
+            cell = WorksheetFunction.RandBetween(-10, 10)
+        Next
+        'Задаём ограничения
+        Dim more_or_less()
+        Dim Arrow As String
+        Arrow1 = ChrW(&H2264)
+        Arrow2 = ChrW(&H2265)
+        more_or_less = Array(Arrow1, Arrow2)
+        For Each cell In Range("J5", "J7")
+            cell = more_or_less(CStr(Rnd))
+        Next
+        For Each cell In Range("D5", "F7")
+            cell = WorksheetFunction.RandBetween(-10, 10)
+        Next
+        For Each cell In Range("K5", "K7")
+            cell = WorksheetFunction.RandBetween(-10, 10)
+        Next
+    End If
+    Range("B3") = "Z(x)"
+    Range("C3") = "="
+    Range("J3") = ChrW(&H2192)
+    Range("B3", "K3").Interior.Color = RGB(198, 239, 206)
+        
+End Sub
