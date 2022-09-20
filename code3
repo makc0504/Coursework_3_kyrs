@@ -1,0 +1,151 @@
+// Кнопка добавления задачи в сборник задач
+Sub Button4_save()
+
+    Set Sheet1 = Sheets("Создание и решение ЗЛП")
+    Set Sheet2 = Sheets("Сборник задач")
+    
+    Sheet2.Range("B2", "K100").Font.Name = "Times New Roman"
+    Sheet2.Range("B2", "K100").Font.Size = 13
+    Sheet2.Range("B2", "K100").HorizontalAlignment = xlCenter
+    
+    Dim x1_sign(2) As String
+    Dim x2_sign(2) As String
+    Dim x3_sign(2) As String
+    Dim X1() As Variant
+    Dim X2() As Variant
+    Dim X3() As Variant
+    Dim Z_x() As Variant
+    Dim y() As Variant
+    Dim y_sign(2) As String
+    Dim y_new() As Variant
+    Dim sign() As Variant
+    Dim answer As Variant
+    Dim Str As Variant
+    
+    Z_x = Array(Sheet1.Range("B3").Value, Sheet1.Range("C3").Value, Sheet1.Range("D3").Value, _
+    "+", Sheet1.Range("E3").Value, "+", Sheet1.Range("F3").Value, Sheet1.Range("J3").Value, _
+    Sheet1.Range("K3").Value)
+    
+    
+    If Z_x(2) = 1 Then
+        Z_x(2) = "x" & ChrW(&H2081)
+    Else: Z_x(2) = Z_x(2) & "x" & ChrW(&H2081)
+    End If
+    
+    If Z_x(4) = 1 Then
+        Z_x(4) = "x" & ChrW(&H2082)
+    Else: Z_x(4) = Z_x(4) & "x" & ChrW(&H2082)
+    End If
+    
+    If Z_x(6) = 1 Then
+        Z_x(6) = "x" & ChrW(&H2081)
+    Else: Z_x(6) = Z_x(6) & "x" & ChrW(&H2081)
+    End If
+    
+    Str = 2
+    For i = 0 To 8
+        Sheet2.Cells(Str, i + 2) = Z_x(i)
+    Next i
+    
+    sign = Array(Sheet1.Range("J5").Value, Sheet1.Range("J6").Value, Sheet1.Range("J7").Value)
+    
+    X1 = Array(Sheet1.Range("D5").Value, Sheet1.Range("D6").Value, Sheet1.Range("D7").Value)
+    X2 = Array(Sheet1.Range("E5").Value, Sheet1.Range("E6").Value, Sheet1.Range("E7").Value)
+    X3 = Array(Sheet1.Range("F5").Value, Sheet1.Range("F6").Value, Sheet1.Range("F7").Value)
+    
+    y = Array(Sheet1.Range("K5").Value, Sheet1.Range("K6").Value, Sheet1.Range("K7").Value)
+    y_new = Array(Sheet2.Range("H2"), Sheet2.Range("H3"), Sheet2.Range("H4"))
+    
+    For i = 0 To 2
+        If X1(i) <> 0 Then
+            x1_sign(i) = IIf(X1(i) < 0, ChrW(&H2212), "+")
+        End If
+        If X2(i) <> 0 Then
+            x2_sign(i) = IIf(X2(i) < 0, ChrW(&H2212), "+")
+        End If
+        If X3(i) <> 0 Then
+            x3_sign(i) = IIf(X3(i) < 0, ChrW(&H2212), "+")
+        End If
+        If y(i) <> 0 Then
+            y_sign(i) = IIf(y(i) < 0, ChrW(&H2212), "+")
+        End If
+    Next
+    
+    For i = 0 To 2
+        Sheet2.Cells(i + 3, 9).Value = sign(i)
+    Next i
+    
+    X1_new = Array(Sheet2.Range("B2").Value, Sheet2.Range("B4").Value, Sheet2.Range("B6").Value)
+    X2_new = Array(Sheet2.Range("D2").Value, Sheet2.Range("D4").Value, Sheet2.Range("D6").Value)
+    X3_new = Array(Sheet2.Range("F2").Value, Sheet2.Range("F4").Value, Sheet2.Range("F6").Value)
+    
+    For i = 0 To 2
+        If X1(i) <> 0 Then
+            If X1(i) <> 1 And X1(i) <> -1 Then
+                X1_new(i) = Abs(X1(i)) & "x" & ChrW(&H2081)
+             Else
+                X1_new(i) = "x" & ChrW(&H2081)
+            End If
+        End If
+        
+        If X2(i) <> 0 Then
+            If X2(i) <> 1 And X2(i) <> -1 Then
+                X2_new(i) = Abs(X2(i)) & "x" & ChrW(&H2082)
+            Else
+                X2_new(i) = "x" & ChrW(&H2082)
+            End If
+        End If
+        
+        If X3(i) <> 0 Then
+            If X3(i) <> 1 And X3(i) <> -1 Then
+                X3_new(i) = Abs(X3(i)) & "x" & ChrW(&H2083)
+            Else
+                X3_new(i) = "x" & ChrW(&H2083)
+            End If
+        End If
+        y_new(i) = Abs(y(i))
+    Next
+            
+        
+    For i = 0 To 2
+        If X1_new(i) <> 0 Then
+            If x1_sign(i) = "+" Then
+                Sheet2.Cells(i + 3, 4).Value = X1_new(i)
+                Sheet2.Cells(i + 3, 4).Font.Italic = False
+            Else
+                Sheet2.Cells(i + 3, 4).Value = ChrW(&H2212) & X1_new(i)
+                Sheet2.Cells(i + 3, 4).Font.Italic = False
+            End If
+        End If
+        Sheet2.Cells(i + 3, 5).Value = IIf(X2(i) <> 0, x2_sign(i), "")
+        Sheet2.Cells(i + 3, 7).Value = IIf(X3(i) <> 0, x3_sign(i), "")
+        If y_sign(i) = "+" Then
+            Sheet2.Cells(i + 3, 10).Value = y_new(i)
+        Else
+            Sheet2.Cells(i + 3, 10).Value = ChrW(&H2212) & y_new(i)
+        End If
+        If X2_new(i) <> 0 Then
+            Sheet2.Cells(i + 3, 6).Value = X2_new(i)
+            Sheet2.Cells(i + 3, 6).Font.Italic = False
+        End If
+        If X3_new(i) <> 0 Then
+            Sheet2.Cells(i + 3, 8).Value = X3_new(i)
+            Sheet2.Cells(i + 3, 8).Font.Italic = False
+        End If
+    Next
+    
+    answer = Sheet1.Range("B30", "F30").Value
+    
+    Row = 3
+    
+    range1 = "M" & Row
+    range2 = "O" & Row
+    
+    Sheet2.Range(range1, range2).Merge
+    Sheet2.Range(range1, range2).HorizontalAlignment = xlCenter
+    Sheet2.Range(range1, range2).Font.Name = "Times New Roman"
+    Sheet2.Range(range1, range2).Font.Size = 12
+    Sheet2.Range(range1, range2).Font.Bold = True
+    Sheet2.Range(range1, range2).Value = answer
+
+End Sub
